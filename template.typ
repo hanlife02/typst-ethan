@@ -26,13 +26,13 @@
   ),
 
   bibliography-file: none,
-  bibstyle: "gb-7714-2015-numeric",
+  bibstyle: "ieee",
 
   paper-size: "a4",
 
   fonts: (
     (
-      en-font: "Linux Libertine",
+      en-font: "Bodoni",
       zh-font: "Noto Sans CJK SC",
       code-font: "DejaVu Sans Mono",
     )
@@ -61,7 +61,7 @@
   // 设置文档元数据
   set document(title: title, author: authors.map(author => author.name))
 
-  // 将链接设置蓝色并加下划线，并且对于作者列表禁用此设置。
+  // 将链接设置橙色并加下划线，并且对于作者列表禁用此设置。
   show link: it => {
     let author-names = ()
     for author in authors {
@@ -71,7 +71,7 @@
     if it.body.has("text") and it.body.text in author-names {
       it
     } else {
-      underline(stroke: (dash: "densely-dotted"), text(fill: blue, it)) 
+      underline(stroke: (dash: "densely-dotted"), text(fill: orange, it))
     }
   }
 
@@ -161,8 +161,10 @@ header: context {
   set heading(numbering: "1.1.1.1.1.")
 
   show heading: it => box(width: 100%)[
-    #if it.numbering != none { counter(heading).display() }
-    #it.body
+    #if it.numbering != none {
+      text(fill: black)[#counter(heading).display()]
+    }
+    #text(fill: accent-color)[#it.body]
 
     #if it.level == 1 and it.numbering != none{
       chaptercounter.step()
@@ -175,9 +177,11 @@ header: context {
     level: 1
   ): it => box(width: 100%)[
     #set align(left)
-    #set text(fill: accent-color)
     #set heading(numbering: "章节 1. ")
-    #it
+    #if it.numbering != none {
+      text(fill: black)[#counter(heading).display()]
+    }
+    #text(fill: accent-color)[#it.body]
     #v(-12pt)
     #line(length:100%, stroke: gray)
   ]
@@ -231,48 +235,52 @@ header: context {
   box(width: 100%, height: 40%)[
     // 显示论文的标题和描述。
     #align(right+bottom)[
-      #text(36pt, weight: "bold")[#title]
-      #parbreak()
-      #if description != none {
-        text(size: 16pt, style: "italic")[#description]
-      }
+      #pad(right: 2em)[
+        #text(36pt, weight: "bold", fill: blue)[#title]
+        #parbreak()
+        #if description != none {
+          text(size: 14pt, style: "italic")[#description]
+        }
+      ]
     ]
   ]
 
   box(width: 100%, height: 50%)[
     #align(right+top)[
-      #if authors.len() > 0 {
-        box(inset: (y: 10pt), {
-          authors.map(author => {
-            text(16pt, weight: "semibold")[
-              #if "homepage" in author {
-                [#link(author.homepage)[#author.name]]
-              } else { author.name }]
-            if "affiliations" in author {
-              super(author.affiliations)
-            }
-            if "github" in author {
-              link(author.github, box(height: 1.1em, baseline: 13.5%)[#image.decode(githubSvg)])
-            }
-          }).join(", ", last: {
-            if authors.len() > 2 {
-              ", and"
-            } else {
-              " and"
-            }
+      #pad(right: 2em)[
+        #if authors.len() > 0 {
+          box(inset: (y: 10pt), {
+            authors.map(author => {
+              text(14pt, weight: "semibold")[
+                #if "homepage" in author {
+                  [#link(author.homepage)[#author.name] #text(fill: black)[#sym.arrow.tr]]
+                } else { author.name }]
+              if "affiliations" in author {
+                super(author.affiliations)
+              }
+              if "github" in author {
+                link(author.github, box(height: 1.1em, baseline: 13.5%)[#image.decode(githubSvg)])
+              }
+            }).join(", ", last: {
+              if authors.len() > 2 {
+                ", and"
+              } else {
+                " and"
+              }
+            })
           })
-        })
-      }
-      #v(-2pt, weak: true)
-      #if affiliations.len() > 0 {
-        box(inset: (bottom: 10pt), {
-          affiliations.map(affiliation => {
-            text(12pt)[
-              #super(affiliation.id)#h(1pt)#affiliation.name
-            ]
-          }).join(", ")
-        })
-      }
+        }
+        #v(-2pt, weak: true)
+        #if affiliations.len() > 0 {
+          box(inset: (bottom: 10pt), {
+            affiliations.map(affiliation => {
+              text(14pt)[
+                #super(affiliation.id)#h(1pt)#affiliation.name
+              ]
+            }).join(", ")
+          })
+        }
+      ]
     ]
   ]
 
@@ -302,29 +310,59 @@ header: context {
       )
     }
   ]
-  
+
   pagebreak()
 
   // 显示笔记的目录
-  outline(indent: auto)
+  align(center)[
+    #text(size: 18pt, weight: "bold")[目录]
+  ]
 
-  
+  v(20pt)
+
+  // 设置目录样式，确保有足够空间
+  show outline.entry.where(
+    level: 1
+  ): it => {
+    v(18pt, weak: true)
+    strong(it)
+  }
+
+  show outline.entry.where(
+    level: 2
+  ): it => {
+    v(12pt, weak: true)
+    it
+  }
+
+  show outline.entry.where(
+    level: 3
+  ): it => {
+    v(8pt, weak: true)
+    it
+  }
+
+  outline(
+    indent: auto,
+    depth: 3
+  )
+
   v(24pt, weak: true)
 
   // 将段落设置为两端对齐，并设置换行。
   set par(justify: true, linebreaks: "optimized", first-line-indent:2em, leading: 0.8em)
+
+  // IEEE样式已经包含方括号，无需额外添加
+  // show cite: it => {
+  //   text("[") + it + text("]")
+  // }
 
   pagebreak()
 
   // 显示笔记的内容
   body
 
-  // 显示参考文献
-  if bibliography-file != none {
-    pagebreak()
-    show bibliography: set text(10.5pt)
-    bibliography(bibliography-file, title: "参考文献", style: bibstyle) // apply bibstyle here.
-  }
+
 }
 
 
@@ -360,7 +398,7 @@ header: context {
 // |   提示   |  olive                |
 // |   注意   |  red                  |
 // |   引用   |  eastern              |
-// |   定理   |  yellow               |  
+// |   定理   |  yellow               |
 // |   命题   |  navy                 |
 
 #let boxnumbering = "1.1.1.1.1.1"

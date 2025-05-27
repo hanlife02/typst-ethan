@@ -1,18 +1,56 @@
 #import "../template.typ": *
 
-= 模板说明
+= 引言
 
-#link("https://github.com/a-kkiri/SimpleNote")[SimpleNote] #cite(<SimpleNote>) 修改自 #link("https://github.com/jskherman/jsk-lecnotes")[jsk-lecnotes]，是一个简单的 Typst 模板。本模板主要适用于编写课程笔记，默认页边距为2.5cm，默认使用的中文字体为 Noto Sans CJK SC，英文字体为 Linux Libertine，字号为12pt（小四），你可以根据自己的需求进行更改，如需使用伪粗体或伪斜体，可以使用外部包 #link("https://typst.app/universe/package/cuti")[cuti]。封面图片由 #link("https://tabbied.com/")[Tabbied] 生成。
+本文档展示了 Typst 学术笔记模板的基本功能和使用方法。
 
-默认模板文件由主要以下六部分组成：
+== 模板特色
+
+这个模板具有以下特点：
+
+- *美观的封面设计*：支持自定义标题、作者信息和背景图片
+- *完整的中文支持*：优化的中文字体和排版
+- *丰富的定理环境*：包含定义、示例、提示等多种样式
+- *专业的数学公式*：支持复杂的数学表达式和编号
+- *灵活的代码展示*：语法高亮和行号支持
+
+
+== 基本使用
+
+=== 文档结构
+
+文档采用模块化设计，主要文件包括：
+
+- `main.typ`：主文档文件，包含配置信息
+- `template.typ`：模板定义文件
+- `content/`：章节内容目录
+- `refs.bib`：参考文献文件
+
+=== 配置说明
+
+在 `main.typ` 中可以配置：
 
 #list(
-  [main.typ 主文件],
-  [template.typ 文档格式控制，包括一些基础的设置、函数],
-  [refs.bib 参考文献],
-  [content 正文文件夹，存放正文章节],
-  [fonts 字体文件夹],
-  [figures 图片文件夹]
-)\ #v(-16pt)
+  [文档标题和描述],
+  [作者信息和所属机构],
+  [字体和主题色设置],
+  [页面尺寸和布局],
+  [参考文献样式]
+)
 
-使用模板首先需配置 main.typ，设置标题、描述、作者等信息。如需要进一步更改文档格式，请修改 template.typ。
+这些配置确保了文档的个性化和专业性。
+
+== 参考文献引用
+
+模板支持完整的参考文献管理功能。本模板的设计参考了 SimpleNote 项目 @SimpleNote，该项目为学术写作提供了优秀的排版解决方案。
+
+=== 引用语法
+
+在文本中可以使用以下方式进行引用：
+
+- 单个引用：`@SimpleNote` 显示为 @SimpleNote
+- 多个引用：`@SimpleNote @netwok2020` 显示为 @SimpleNote @netwok2020
+- 带页码的引用：可以在 BibTeX 条目中指定页码范围
+
+参考文献将自动在文档末尾生成，采用国标 GB/T 7714-2015 数字格式。
+

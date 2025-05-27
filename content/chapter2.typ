@@ -1,83 +1,83 @@
 #import "../template.typ": *
 
-= 使用示例
+= 功能展示
 
-== 特殊记号
+本章节展示模板的主要功能和样式效果。
 
-你可以 Typst 的语法对文本进行#highlight[特殊标记]，我们为如下标记设定了样式：
+== 文本样式
 
-#enum(
-  [*突出*],
-  [_强调_],
-  [引用 @figure],
-  [脚注 #footnote("脚注例")],
-)
+=== 基本格式
+- *粗体文本*：使用主题色显示
+- _斜体文本_：保持原字体样式
+- #highlight[高亮文本]：黄色背景高亮
+- 链接文本：#link("https://typst.app")[Typst 官网]
+- 行内代码：`let x = 42`
 
-== 代码
+== 数学公式
 
-行内代码使用例 `println!("Hello, typst!")`，下面是代码块使用例：
+=== 行内公式
+著名的质能方程 $E = m c^2$ 和欧拉恒等式 $e^(i pi) + 1 = 0$。
+
+=== 行间公式
+高斯公式：
+$ integral.triple_(Omega) (frac(diff P, diff x) + frac(diff Q, diff y) + frac(diff R, diff z)) d v = integral.surf_(Sigma) P d y d z + Q d z d x + R d x d y $ <gauss-formula>
+
+== 代码展示
+
+简单的 Python 代码示例：
 
 #figure(
-```rust
-fn main() {
-    println!("Hello, typst!");
-}
+```python
+def fibonacci(n):
+    if n <= 1:
+        return n
+    return fibonacci(n-1) + fibonacci(n-2)
+
+# 计算前10个斐波那契数
+for i in range(10):
+    print(f"F({i}) = {fibonacci(i)}")
 ```,
-
-caption: [代码块插入例]
-) <cpp-example>
-
-== 图片 <figure>
-
-#figure(caption: [图片插入例])[#image("../figures/typst.png")]<image-example>
-
-== 表格
-
-#figure(caption: [表格插入例])[
-  #table(
-    columns: (1fr, 1fr, 1fr),
-    [表头1]  , [表头2]  , [表头3],
-    [单元格1], [单元格2], [单元格3],
-    [单元格1], [单元格2], [单元格3],
-    [单元格1], [单元格2], [单元格3],
-)]
-
-== 引用块
-
-#blockquote[
-  引用块例
-
-  #blockquote[
-    二级引用块
-  ]
-]
-
-== 公式
-
-行内公式，例如 $integral_123^123a+b+c$ $a^2 + b^2 = c^2$。行内公式使用 `$$` 包裹，公式和两端的 `$$` 之间没有空格$$。
-
-行间公式，例如：$ integral.triple_(Omega)\(frac(diff P, diff x) + frac(diff Q, diff y) + frac(diff R, diff z)\)d v = integral.surf_(Sigma)P d y d z + Q d z d x + R d x d y $<eq> @eq 是高斯公式。行间公式使用 `$$` 环境包裹，公式和两端的 `$$` 之间至少有一个空格。
-
-以上仅为一些简单的公式示例，更多的公式使用方法可以查看 #link("https://typst.app/docs/reference/math/")[typst/docs/math]
-
-另外，如果需要插入 LaTeX 公式可以使用外部包 #link("https://typst.app/universe/package/mitex")[mitex]。
-
+caption: [斐波那契数列计算]
+) <code-example>
 
 == 定理环境
 
+#definition("连续函数")[
+  设函数 $f: D → RR$，如果在点 $x_0$ 处满足 $lim_(x → x_0) f(x) = f(x_0)$，则称 $f$ 在 $x_0$ 处连续。
+]
 
-#definition("定义")[#lorem(30)]
+#example("连续函数示例")[
+  函数 $f(x) = x^2$ 在整个实数域上连续。
+]
 
-#example("示例")[#lorem(30)]
+#tip("学习建议")[
+  理解数学概念时，建议先掌握直观含义，再学习严格定义。
+]
 
-#tip("提示")[#lorem(30)]
+== 表格和图片
 
-#attention("注意")[#lorem(30)]
+#figure(caption: [模板配置参数])[
+  #table(
+    columns: (1fr, 1fr, 1fr),
+    [参数], [默认值], [说明],
+    [paper-size], [a4], [页面尺寸],
+    [accent], [blue], [主题色],
+    [fonts.zh-font], [Kaiti], [中文字体],
+  )
+]
 
-#quote("引用")[#lorem(30)]
+#figure(caption: [示例图片])[
+  #rect(width: 150pt, height: 80pt, fill: gray.lighten(80%), stroke: 1pt)[
+    #align(center + horizon)[图片占位符]
+  ]
+] <image-example>
 
-#theorem("定理")[#lorem(30)]
+== 引用和分隔
 
-#proposition("命题")[#lorem(30)]
+#blockquote[
+  "数学是科学的语言。" —— 伽利略
+]
 
-#sectionline
+#horizontalrule
+
+通过引用可以链接到图片 @image-example、公式 @gauss-formula 和代码 @code-example。
