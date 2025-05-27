@@ -1,0 +1,61 @@
+# Typst 编译输出文件
+*.pdf
+
+# macOS 系统文件
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Windows 系统文件
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Linux 系统文件
+*~
+
+# 编辑器和 IDE 文件
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# 临时文件
+*.tmp
+*.temp
+*.bak
+*.backup
+
+# 日志文件
+*.log
+
+# 字体文件（如果不想推送大文件）
+# fonts/*.ttf
+# fonts/*.otf
+# fonts/*.woff
+# fonts/*.woff2
+
+# 图片文件（如果不想推送大文件）
+# figures/*.jpg
+# figures/*.jpeg
+# figures/*.png
+# figures/*.gif
+# figures/*.svg
+
+# 个人配置文件
+.env
+.env.local
+
+# 缓存目录
+.cache/
+cache/
+
+# 构建输出目录
+build/
+dist/
+out/
