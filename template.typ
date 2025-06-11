@@ -352,11 +352,6 @@ header: context {
   // 将段落设置为两端对齐，并设置换行。
   set par(justify: true, linebreaks: "optimized", first-line-indent:2em, leading: 0.8em)
 
-  // IEEE样式已经包含方括号，无需额外添加
-  // show cite: it => {
-  //   text("[") + it + text("]")
-  // }
-
   pagebreak()
 
   // 显示笔记的内容

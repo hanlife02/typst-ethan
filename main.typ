@@ -39,7 +39,7 @@
 
   // 参考书目文件路径及引用样式
   bibliography-file: "refs.bib",
-  bibstyle: "gb-7714-2015-numeric",
+  bibstyle: "ieee",
 
   // 主题色
   accent: blue,
@@ -54,4 +54,4 @@
 
 // 参考文献
 #pagebreak()
-#bibliography("refs.bib", title: "参考文献", style: "gb-7714-2015-numeric")
+#bibliography("refs.bib", title: "参考文献", style: "ieee")
